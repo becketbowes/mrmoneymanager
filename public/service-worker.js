@@ -1,3 +1,4 @@
+//list files that should be accessible offline
 const FILES_TO_CACHE = [
     "./index.html",
     "./css/styles.css",
@@ -5,10 +6,12 @@ const FILES_TO_CACHE = [
     "./js/idb.js"
 ];
 
-const APP_PREFIX = 'mrmoneymanager';
+//name the service worker
+const APP_PREFIX = 'mr$manager';
 const VERSION = 'version_01';
 const CACHE_NAME = APP_PREFIX + VERSION;
 
+//cache the files for use if server is unavailable
 self.addEventListener("install", function(e) {
     e.waitUntil(
         caches.open(CACHE_NAME).then(function(cache) {
@@ -18,6 +21,7 @@ self.addEventListener("install", function(e) {
     )
 })
 
+//look for existing caches by key, add self to active caches, delete unneccesary caches
 self.addEventListener('activate', function(e) {
     e.waitUntil(
         caches.keys().then(function(keyList) {
